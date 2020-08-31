@@ -29,15 +29,20 @@ using System.Threading.Tasks;
 public class Reader
 {
 	private readonly string dictionaryPath;
+	private readonly string pipeHandleAsString;
 	private readonly FileInfo dictionary;
 
-	public Reader(string dictionaryPath)
+	public Reader(string dictionaryPath, string pipeHandleAsString)
 	{
-		if (string.IsNullOrEmpty(dictionaryPath) || !File.Exists(dictionaryPath)) {
-			throw new Exception($"invalid file path: {dictionaryPath}");
+		if (string.IsNullOrWhiteSpace(dictionaryPath) || !File.Exists(dictionaryPath)) {
+			throw new ArgumentException($"invalid file path: {dictionaryPath}");
+		}
+		if (string.IsNullOrWhiteSpace(pipeHandleAsString)) {
+			throw new ArgumentException("pipe handle cannot be empty", nameof(pipeHandleAsString));
 		}
 
 		this.dictionaryPath = dictionaryPath;
+		this.pipeHandleAsString = pipeHandleAsString;
 		dictionary = new FileInfo(dictionaryPath);
 	}
 
