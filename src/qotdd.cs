@@ -56,24 +56,48 @@ public class Program
 		}
 
 		if (listener_flag) {
-			// setup the network Listener
-			SetupListener();
+			// run as the network Listener
+			Listener();
 		}
 
 		if (reader_flag) {
-			// setup the dictionary reader
-			SetupReader();
+			// run as the dictionary reader
+			Reader();
 		}
+
+		// This is what the main app does
+		ForkListener();
+		ForkReader();
 	}
 
-	private static void SetupListener()
+	/// <summary>
+	/// Run this process as the network listener (frontend).
+	/// </summary>
+	private static void Listener()
 	{
 
 	}
 
-	private static void SetupReader()
+	/// <summary>
+	/// Run this process as the dictionary reader (engine).
+	/// </summary>
+	private static void Reader()
 	{
-		Reader reader = new Reader(Dictionary_Path);
-		reader.Go();
+	}
+
+	/// <summary>
+	/// Setup and exec the listener process.
+	/// </summary>
+	private static void ForkListener()
+	{
+
+	}
+
+	/// <summary>
+	/// Setup and exec the reader process.
+	/// </summary>
+	private static void ForkReader()
+	{
+		
 	}
 }
