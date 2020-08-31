@@ -26,6 +26,8 @@ using System.Threading.Tasks;
 
 public class Program
 {
+	private const string Dictionary_Path = "";
+
 	public static void Main(string[] args)
 	{
 		bool listener_flag = false;	// Listen to network requests
@@ -71,7 +73,7 @@ public class Program
 
 	private static void SetupReader()
 	{
-		Reader reader = new Reader();
+		Reader reader = new Reader(Dictionary_Path);
 		reader.Go();
 	}
 }

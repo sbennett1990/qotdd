@@ -28,10 +28,17 @@ using System.Threading.Tasks;
 /// </summary>
 public class Reader
 {
+	private readonly string dictionaryPath;
+	private readonly FileInfo dictionary;
 
-	public Reader()
+	public Reader(string dictionaryPath)
 	{
+		if (string.IsNullOrEmpty(dictionaryPath) || !File.Exists(dictionaryPath)) {
+			throw new Exception($"invalid file path: {dictionaryPath}");
+		}
 
+		this.dictionaryPath = dictionaryPath;
+		dictionary = new FileInfo(dictionaryPath);
 	}
 
 	public void Go()
