@@ -46,7 +46,7 @@ public class Reader
 		dictionary = new FileInfo(dictionaryPath);
 	}
 
-	public void Go()
+	public void Start()
 	{
 		Console.WriteLine("Reader is going!");
 	}
