@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{d87ab297-539e-4b0a-9253-12b44a25b16c}</ProjectGuid>
+    <ProjectGuid>{D87AB297-539E-4B0A-9253-12B44A25B16C}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <RootNamespace>qotdd</RootNamespace>
     <AssemblyName>qotdd</AssemblyName>
