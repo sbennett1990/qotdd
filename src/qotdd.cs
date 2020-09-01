@@ -34,6 +34,8 @@ public class Program
 		bool listener_flag = false;	// Listen to network requests
 		bool reader_flag = false;	// Read the dictionary file
 
+		string readerHandle = null;
+
 		/*
 		CommandLineProcessor argsProcessor = new CommandLineProcessor();
 		argsProcessor.RegisterOptionMatchHandler("L", requiresArgument: false, (sender, o) => {
@@ -43,6 +45,9 @@ public class Program
 		*/
 			reader_flag = true;
 		/*
+		});
+		argsProcessor.RegisterOptionMatchHandler("H", requiresArgument: true, (sender, o) => {
+			readerHandle = o.Argument;
 		});
 		argsProcessor.RegisterOptionMatchHandler(CommandLineProcessor.InvalidOptionIdentifier, (sender, o) => {
 			//Usage();
@@ -63,7 +68,7 @@ public class Program
 
 		if (reader_flag) {
 			// run as the dictionary reader
-			Reader();
+			Reader(readerHandle);
 		}
 
 		// This is what the main app does
@@ -82,8 +87,10 @@ public class Program
 	/// <summary>
 	/// Run this process as the dictionary reader (engine).
 	/// </summary>
-	private static void Reader()
+	private static void Reader(string readerHandle)
 	{
+		Reader reader = new Reader(Dictionary_Path, pipeHandleAsString: readerHandle);
+		reader.Start();
 	}
 
 	/// <summary>
