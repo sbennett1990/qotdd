@@ -27,6 +27,7 @@ using System.Threading.Tasks;
 public class Program
 {
 	private const string Dictionary_Path = "";
+	private const string Proc_Name = "qotdd";
 
 	public static void Main(string[] args)
 	{
