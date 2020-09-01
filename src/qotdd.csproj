@@ -53,5 +53,11 @@
   <ItemGroup>
     <None Include="app.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="lib\libcmdline\libcmdline.csproj">
+      <Project>{853c7fe9-e12b-484c-93de-3f3de6907860}</Project>
+      <Name>libcmdline</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
