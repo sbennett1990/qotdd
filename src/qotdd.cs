@@ -22,7 +22,7 @@ using System.IO.Pipes;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-//using libcmdline;
+using libcmdline;
 
 public class Program
 {
@@ -36,15 +36,12 @@ public class Program
 
 		string readerHandle = null;
 
-		/*
 		CommandLineProcessor argsProcessor = new CommandLineProcessor();
 		argsProcessor.RegisterOptionMatchHandler("L", requiresArgument: false, (sender, o) => {
 			listener_flag = true;
 		});
 		argsProcessor.RegisterOptionMatchHandler("R", requiresArgument: false, (sender, o) => {
-		*/
 			reader_flag = true;
-		/*
 		});
 		argsProcessor.RegisterOptionMatchHandler("H", requiresArgument: true, (sender, o) => {
 			readerHandle = o.Argument;
@@ -54,7 +51,6 @@ public class Program
 			Environment.Exit(1);
 		});
 		argsProcessor.ProcessCommandLineArgs(args);
-		*/
 
 		if (listener_flag && reader_flag) {
 			// Error!
