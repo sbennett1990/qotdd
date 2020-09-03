@@ -103,6 +103,9 @@ namespace OpenBSD
                 Errno e = (Errno)Marshal.GetLastWin32Error();
                 switch (e)
                 {
+                    case Errno.EFAULT:
+                        throw new Win32Exception((int)e,
+                            "promises or execpromises points outside the process's allocated address space.");
                     case Errno.EINVAL:
                         throw new Win32Exception((int)e,
                             "promises is malformed or contains invalid keywords.");
@@ -112,12 +115,9 @@ namespace OpenBSD
                     case Errno.ENAMETOOLONG:
                         throw new Win32Exception((int)e,
                             "promises or execpromises string is too long.");
-                    case Errno.EFAULT:
-                        throw new Win32Exception((int)e,
-                            "promises or execpromises points outside the process's allocated address space.");
                     default:
                         throw new Win32Exception((int)e,
-                            "The system has thrown an unknown error.");
+                            "The system returned an unknown error.");
                 }
             }
             else
