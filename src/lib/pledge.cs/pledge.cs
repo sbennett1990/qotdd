@@ -122,7 +122,9 @@ namespace OpenBSD
         private static bool IsOpenBSD()
         {
             if (Environment.OSVersion.Platform != PlatformID.Unix)
+            {
                 return false;
+            }
             Utsname uname;
             Syscall.uname(out uname);
             return uname.sysname == "OpenBSD";
