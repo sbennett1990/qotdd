@@ -1,4 +1,5 @@
 /*
+ * Copyright (c) 2020 Scott Bennett <scottb@fastmail.com>
  * Copyright (c) 2016 Calvin Buckley <calvin@openmailbox.org>
  *
  * Permission to use, copy, modify, and distribute this software for any
