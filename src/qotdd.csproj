@@ -58,6 +58,10 @@
       <Project>{853c7fe9-e12b-484c-93de-3f3de6907860}</Project>
       <Name>libcmdline</Name>
     </ProjectReference>
+    <ProjectReference Include="lib\pledge.cs\pledge.cs.csproj">
+      <Project>{49539ed9-5dc5-4c60-8c1c-17cdc00ca8ac}</Project>
+      <Name>pledge.cs</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
