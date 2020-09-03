@@ -19,7 +19,7 @@ using System.Runtime.InteropServices;
 using System.ComponentModel;
 using Mono.Unix.Native;
 
-namespace OpenBSD
+namespace OpenBSD.Unistd
 {
     /// <summary>
     /// Uses OpenBSD's pledge(2) syscall to restrict system operations of the
