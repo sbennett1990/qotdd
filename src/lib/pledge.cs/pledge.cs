@@ -67,6 +67,11 @@ namespace OpenBSD.Unistd
         /// restricted-service operating mode. Subsequent calls to Init() can
         /// reduce the abilities further, but abilities can never be regained.
         /// </summary>
+        /// <remarks>
+        /// Unsupported platforms will throw a PlatformNotSupportedException.
+        /// This can be ignored, but it should be noted that the process will
+        /// run without sandboxing or restrictions.
+        /// </remarks>
         /// <param name="promises">
         /// Space-separated list of promises to drop to
         /// </param>
