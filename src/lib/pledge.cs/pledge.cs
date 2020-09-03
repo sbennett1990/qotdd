@@ -26,7 +26,7 @@ namespace OpenBSD
     /// </summary>
     /// <remarks>
     /// Consult the OpenBSD manual page:
-    /// http://man.openbsd.org/OpenBSD-current/man2/pledge.2
+    /// https://man.openbsd.org/pledge
     /// </remarks>
     public static class Pledge
     {
