@@ -37,15 +37,6 @@ namespace OpenBSD
         [DllImport("libc.so", SetLastError = true, CharSet = CharSet.Auto)]
         private static extern int pledge(string promises, string execpromises);
 
-        private static bool IsOpenBSD()
-        {
-            if (Environment.OSVersion.Platform != PlatformID.Unix)
-                return false;
-            Utsname uname;
-            Syscall.uname(out uname);
-            return uname.sysname == "OpenBSD";
-        }
-
         /// <summary>
         /// Whether the process has been pledged.
         /// </summary>
@@ -126,6 +117,15 @@ namespace OpenBSD
                 Promises = promises;
                 ExecPromises = execpromises;
             }
+        }
+
+        private static bool IsOpenBSD()
+        {
+            if (Environment.OSVersion.Platform != PlatformID.Unix)
+                return false;
+            Utsname uname;
+            Syscall.uname(out uname);
+            return uname.sysname == "OpenBSD";
         }
     }
 }
