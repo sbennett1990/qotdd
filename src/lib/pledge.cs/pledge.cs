@@ -111,7 +111,7 @@ namespace OpenBSD
                             "This process is attempting to increase permissions.");
                     case Errno.ENAMETOOLONG:
                         throw new Win32Exception((int)e,
-                            "A path or the promises are too long.");
+                            "promises or execpromises string is too long.");
                     case Errno.EFAULT:
                         throw new Win32Exception((int)e,
                             "promises or execpromises points outside the process's allocated address space.");
