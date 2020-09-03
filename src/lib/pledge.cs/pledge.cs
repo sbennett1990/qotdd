@@ -30,6 +30,9 @@ namespace OpenBSD
     /// </remarks>
     public static class Pledge
     {
+        private const int MAJOR = 6;
+        private const int MINOR = 6;
+
         [DllImport("libc.so", SetLastError = true, CharSet = CharSet.Auto)]
         private static extern int pledge(string promises, string[] paths);
 
@@ -79,12 +82,12 @@ namespace OpenBSD
         /// </exception>
         public static void Init(string promises, string[] paths = null)
         {
-            // check for if it's not unix, not openbsd, not openbsd 5.9
+            // check for supported version of OpenBSD
             if (!IsOpenBSD()
-                || Environment.OSVersion.Version < new Version(5, 9))
+                || Environment.OSVersion.Version < new Version(MAJOR, MINOR))
             {
                 throw new PlatformNotSupportedException
-                    ("pledge(2) is only supported by OpenBSD 5.9 or later.");
+                    ($"this pledge(2) ffi only supports OpenBSD {MAJOR}.{MINOR} or later");
             }
             // 5.9 doesn't support paths
             if (paths != null && Environment.OSVersion.Version.Major == 5)
