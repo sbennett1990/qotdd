@@ -23,6 +23,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using libcmdline;
+using OpenBSD.Unistd;
 
 public class Program
 {
@@ -85,6 +86,12 @@ public class Program
 	/// </summary>
 	private static void Reader(string readerHandle)
 	{
+		try {
+			Pledge.Init("stdio rpath cpath sendfd recvfd vminfo");
+		}
+		catch (PlatformNotSupportedException e) {
+			// Log a warning that the process isn't pledge(2)'d, but move on
+		}
 		Reader reader = new Reader(Dictionary_Path, pipeHandleAsString: readerHandle);
 		reader.Start();
 	}
