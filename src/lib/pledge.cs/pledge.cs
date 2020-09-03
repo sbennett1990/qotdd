@@ -22,7 +22,8 @@ using Mono.Unix.Native;
 namespace OpenBSD
 {
     /// <summary>
-    /// Uses OpenBSD's pledge(2) syscall to reduce process privleges.
+    /// Uses OpenBSD's pledge(2) syscall to restrict system operations of the
+    /// process.
     /// </summary>
     /// <remarks>
     /// Consult the OpenBSD manual page:
