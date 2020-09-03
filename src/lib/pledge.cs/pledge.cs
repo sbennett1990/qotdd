@@ -35,7 +35,7 @@ namespace OpenBSD
         private const int MINOR = 6;
 
         [DllImport("libc.so", SetLastError = true, CharSet = CharSet.Auto)]
-        private static extern int pledge(string promises, string[] paths);
+        private static extern int pledge(string promises, string execpromises);
 
         private static bool IsOpenBSD()
         {
@@ -47,7 +47,7 @@ namespace OpenBSD
         }
 
         /// <summary>
-        /// Gets if the process has been pledged.
+        /// Whether the process has been pledged.
         /// </summary>
         public static bool IsPledged
         {
@@ -55,7 +55,7 @@ namespace OpenBSD
         }
 
         /// <summary>
-        /// Gets the current privleges the program has dropped to.
+        /// Current privleges the process has dropped to.
         /// </summary>
         public static string Promises
         {
@@ -63,25 +63,32 @@ namespace OpenBSD
         }
 
         /// <summary>
-        /// Gets the current paths the program has dropped to.
+        /// Current execpromises the process has specified.
         /// </summary>
-        public static string[] Paths
+        public static string ExecPromises
         {
             get; private set;
         }
 
         /// <summary>
-        /// Use OpenBSD's pledge(2) syscall to reduce process privleges.
+        /// Use OpenBSD's pledge(2) syscall to force the current process into a
+        /// restricted-service operating mode. Subsequent calls to Init() can
+        /// reduce the abilities further, but abilities can never be regained.
         /// </summary>
-        /// <param name="promises">The list of privleges to drop to.</param>
-        /// <param name="paths">The list of paths to allow access to.</param>
+        /// <param name="promises">
+        /// Space-separated list of promises to drop to
+        /// </param>
+        /// <param name="execpromises">
+        /// Space-separated list of promises that a child process will begin
+        /// life with (the use of this parameter is not currently encouraged)
+        /// </param>
         /// <exception cref="PlatformNotSupportedException">
         /// Thrown if the the current OS isn't OpenBSD or the version is too old.
         /// </exception>
         /// <exception cref="Win32Exception">
-        /// Thrown if pledge returns an error.
+        /// Thrown if pledge(2) returns an error.
         /// </exception>
-        public static void Init(string promises, string[] paths = null)
+        public static void Init(string promises, string execpromises = null)
         {
             // check for supported version of OpenBSD
             if (!IsOpenBSD()
@@ -90,33 +97,24 @@ namespace OpenBSD
                 throw new PlatformNotSupportedException
                     ($"this pledge(2) ffi only supports OpenBSD {MAJOR}.{MINOR} or later");
             }
-            // 5.9 doesn't support paths
-            if (paths != null && Environment.OSVersion.Version.Major == 5)
-            {
-                throw new PlatformNotSupportedException
-                    ("Path restrictions are not supported by this version of OpenBSD.");
-            }
 
-            if (pledge(promises, paths) == -1)
+            if (pledge(promises, execpromises) == -1)
             {
                 Errno e = (Errno)Marshal.GetLastWin32Error();
                 switch (e)
                 {
-                    case Errno.E2BIG:
-                        throw new Win32Exception((int)e,
-                            "The paths array is too large.");
                     case Errno.EINVAL:
                         throw new Win32Exception((int)e,
-                            "The promises are malformed or invalid.");
+                            "promises is malformed or contains invalid keywords.");
                     case Errno.EPERM:
                         throw new Win32Exception((int)e,
-                            "The process is trying to increase permissions.");
+                            "This process is attempting to increase permissions.");
                     case Errno.ENAMETOOLONG:
                         throw new Win32Exception((int)e,
                             "A path or the promises are too long.");
                     case Errno.EFAULT:
                         throw new Win32Exception((int)e,
-                            "The paths or promises point outside of memory.");
+                            "promises or execpromises points outside the process's allocated address space.");
                     default:
                         throw new Win32Exception((int)e,
                             "The system has thrown an unknown error.");
@@ -126,7 +124,7 @@ namespace OpenBSD
             {
                 IsPledged = true;
                 Promises = promises;
-                Paths = paths;
+                ExecPromises = execpromises;
             }
         }
     }
